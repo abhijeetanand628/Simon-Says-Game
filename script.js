@@ -2,7 +2,6 @@ const lvl = document.querySelector('#level-display');
 const startBtn = document.querySelector('#start-btn');
 const playAgain = document.querySelector('#again-btn')
 const buttons = document.querySelectorAll('.simon-btn');
-const msg = document.querySelector('.controls');
 
 let simonSequence = [];
 let playerSequence = [];
@@ -17,16 +16,14 @@ function getRandomcolor() {
 lvl.innerHTML = '0';
 
 startBtn.addEventListener('click', function() {
-    console.log("Game started");
-    lvl.innerHTML = '1';
     startBtn.innerHTML = 'Game started';
     startBtn.disabled = true;
     nextLevel()
 })
 
 playAgain.addEventListener('click', function() {
-    console.log("Game started again!");
-    lvl.innerHTML = '0';
+    level = 0;
+    lvl.innerHTML = level;
     startBtn.innerHTML = 'Start Game';
     startBtn.disabled = false;
     simonSequence = [];
@@ -35,7 +32,7 @@ playAgain.addEventListener('click', function() {
 
 function nextLevel() {
     level++;
-    msg.innerHTML = `Level: ${level}`;
+    lvl.innerHTML = level;
     playerSequence = [];
     const newColor = getRandomcolor();
     simonSequence.push(newColor)
@@ -56,13 +53,15 @@ buttons.forEach(button => {
     button.addEventListener('click', function() {
         const clickedColor = button.id;
         button.classList.add("active");
-        setTimeout(() => button.classList.remove("active"), 200)
+        setTimeout(() => button.classList.remove("active"), 400)
         playerSequence.push(clickedColor);
         const currentIndex = playerSequence.length - 1;
         if(playerSequence[currentIndex] !== simonSequence[currentIndex]) {
-            msg.innerHTML = `You lost at level ${level}`;
+            lvl.innerHTML = `You lost at level ${level}`;
+            startBtn.disabled = false;
+            startBtn.innerHTML = 'Start Game'
         }
-        else
+        else if (playerSequence.length === simonSequence.length)
         {
             setTimeout(nextLevel, 800);
         }
