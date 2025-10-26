@@ -13,6 +13,9 @@ function getRandomcolor() {
     return colors[Math.floor(Math.random() * 4)];
 }
 
+levelDisplay.innerHTML = 'Level: 0';
+buttons.forEach(btn => btn.style.pointerEvents = 'none');
+
 startBtn.addEventListener('click', function() {
     startBtn.innerHTML = 'Game started';
     startBtn.disabled = true;
